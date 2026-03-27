@@ -416,6 +416,44 @@ document.getElementById('loginModal').addEventListener('click', e => {
 // ==================== PRODUCT CATALOG ====================
 let currentFilter = 'all';
 let currentSearch = '';
+let inventoryMap = {}; // SKU -> { quantity, status }
+
+// Fetch real inventory data from Supabase
+async function loadInventoryData() {
+  try {
+    const { data, error } = await supabase
+      .from('inventory')
+      .select('sku, quantity, status');
+    if (!error && data) {
+      data.forEach(item => {
+        inventoryMap[item.sku] = { quantity: item.quantity, status: item.status };
+      });
+      renderProducts();
+    }
+  } catch (e) {
+    // Supabase not available, use default data
+  }
+}
+
+// Load real inventory on page start
+loadInventoryData();
+
+function getStockInfo(product) {
+  const inv = inventoryMap[product.sku];
+  if (inv) {
+    const statusMap = {
+      available: '充足',
+      low: '库存紧张',
+      out: '已售罄'
+    };
+    return {
+      stock: inv.status,
+      stockLabel: statusMap[inv.status] || '充足',
+      units: `库存 ${inv.quantity} 个`
+    };
+  }
+  return { stock: product.stock, stockLabel: product.stockLabel, units: product.units };
+}
 
 function renderProducts() {
   const grid = document.getElementById('productGrid');
@@ -437,7 +475,9 @@ function renderProducts() {
     return;
   }
 
-  grid.innerHTML = filtered.map((p, i) => `
+  grid.innerHTML = filtered.map((p, i) => {
+    const si = getStockInfo(p);
+    return `
     <div class="product-card reveal" style="transition-delay:${i * 0.08}s;" onclick="openProductModal('${p.id}')">
       <div class="product-card__img">
         <img src="${p.images[0]}" alt="${p.name}" loading="lazy" />
@@ -447,14 +487,14 @@ function renderProducts() {
         <h3 class="product-card__title">${p.name}</h3>
         <div class="product-card__meta">
           <span class="product-card__stock">
-            <span class="stock-dot stock-dot--${p.stock}"></span>
-            ${p.stockLabel}
+            <span class="stock-dot stock-dot--${si.stock}"></span>
+            ${si.stockLabel}
           </span>
-          <span>${p.units}</span>
+          <span>${si.units}</span>
         </div>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   // Re-observe for scroll animation
   initRevealObserver();
