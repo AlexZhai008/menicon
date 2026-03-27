@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Menicon Life Support Hub — 目立康生活支持平台，提供免费品目录、库存管理、预算管理及产品专家服务。" />
+  <title>Menicon Life Support Hub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>✦</text></svg>" />
+</head>
+<body>
+
+  <!-- Particle Canvas Background -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- ============ NAVBAR ============ -->
+  <nav class="navbar" id="navbar">
+    <a href="#hero" class="navbar__brand">
+      <div class="navbar__brand-icon">M</div>
+      <span>Menicon Life</span>
+    </a>
+
+    <div class="navbar__links" id="navLinks">
+      <a href="#hero" class="navbar__link active" data-section="hero">首页</a>
+      <a href="#modules" class="navbar__link" data-section="modules">功能模块</a>
+      <a href="#catalog" class="navbar__link" data-section="catalog">产品目录</a>
+      <a href="#about" class="navbar__link" data-section="about">关于我们</a>
+    </div>
+
+    <div class="navbar__actions">
+      <button class="btn btn--primary btn--sm" id="loginBtn" onclick="openLogin()">
+        <span>🔐</span> 登录
+      </button>
+      <button class="navbar__toggle" id="navToggle" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero__badge">
+      <span class="dot"></span>
+      Life Support Hub
+    </div>
+
+    <h1 class="hero__title">
+      <span id="typewriter"></span><span class="cursor" style="border-right: 2px solid var(--color-accent); animation: pulse 1s infinite;">​</span>
+    </h1>
+
+    <p class="hero__subtitle">
+      目立康生活支持平台 —— 整合免费品目录、库存管理、预算管理与产品专家服务，<br />为您提供一站式高效管理体验。
+    </p>
+
+    <div class="hero__cta">
+      <a href="#catalog" class="btn btn--primary btn--lg">浏览产品目录</a>
+      <a href="#modules" class="btn btn--ghost btn--lg">了解更多 →</a>
+    </div>
+
+    <div class="hero__scroll-indicator">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============ MODULES ============ -->
+  <section class="section" id="modules">
+    <div class="section__header reveal">
+      <div class="section__label">Core Modules</div>
+      <h2 class="section__title">四大核心功能模块</h2>
+      <p class="section__desc">一站式整合企业运营所需的关键能力，从产品管理到预算追踪，全面赋能业务团队。</p>
+    </div>
+
+    <div class="modules-grid">
+      <!-- Card 1: Free Catalog -->
+      <div class="module-card reveal" style="transition-delay: 0.1s;" onclick="scrollToSection('catalog')">
+        <div class="module-card__icon">📦</div>
+        <h3 class="module-card__title">免费品目录</h3>
+        <p class="module-card__desc">浏览并管理所有推广赠品与营销物料，实时查看库存状态与产品详情。</p>
+        <span class="module-card__status module-card__status--open">● 公开访问</span>
+        <span class="module-card__arrow">→</span>
+      </div>
+
+      <!-- Card 2: Inventory -->
+      <div class="module-card reveal" style="transition-delay: 0.2s;" onclick="openLogin()">
+        <div class="module-card__icon">📊</div>
+        <h3 class="module-card__title">库存管理</h3>
+        <p class="module-card__desc">全方位追踪库存快照、图片库与详细库存数据，确保供应链高效运转。</p>
+        <span class="module-card__status module-card__status--locked">🔒 需要登录</span>
+        <span class="module-card__arrow">→</span>
+      </div>
+
+      <!-- Card 3: Budget -->
+      <div class="module-card reveal" style="transition-delay: 0.3s;" onclick="openLogin()">
+        <div class="module-card__icon">💰</div>
+        <h3 class="module-card__title">预算管理</h3>
+        <p class="module-card__desc">预算对实际支出分析、差异追踪与财务报告，让每一笔开支清晰可控。</p>
+        <span class="module-card__status module-card__status--locked">🔒 需要登录</span>
+        <span class="module-card__arrow">→</span>
+      </div>
+
+      <!-- Card 4: Product Expert -->
+      <div class="module-card reveal" style="transition-delay: 0.4s;">
+        <div class="module-card__icon">🧠</div>
+        <h3 class="module-card__title">产品专家</h3>
+        <p class="module-card__desc">专业产品支持门户，提供深度产品知识库与应用指导（即将上线）。</p>
+        <span class="module-card__status module-card__status--dev">🚧 开发中</span>
+        <span class="module-card__arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CATALOG ============ -->
+  <section class="section" id="catalog">
+    <div class="section__header reveal">
+      <div class="section__label">Free Catalog</div>
+      <h2 class="section__title">免费品目录</h2>
+      <p class="section__desc">探索丰富的推广赠品与营销物料，支持分类筛选与关键词搜索。</p>
+    </div>
+
+    <div class="catalog reveal">
+      <div class="catalog__toolbar">
+        <div class="catalog__filters">
+          <button class="filter-btn active" data-filter="all" onclick="filterProducts('all', this)">全部</button>
+          <button class="filter-btn" data-filter="promo" onclick="filterProducts('promo', this)">推广赠品</button>
+          <button class="filter-btn" data-filter="market" onclick="filterProducts('market', this)">营销物料</button>
+          <button class="filter-btn" data-filter="access" onclick="filterProducts('access', this)">配件</button>
+          <button class="filter-btn" data-filter="other" onclick="filterProducts('other', this)">其他</button>
+        </div>
+        <div class="catalog__search">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="搜索产品名称..." id="searchInput" oninput="searchProducts(this.value)" />
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="section__header reveal">
+      <div class="section__label">About Us</div>
+      <h2 class="section__title">关于目立康</h2>
+      <p class="section__desc">全球领先的隐形眼镜制造商，以创新科技守护每一双眼睛。</p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-text reveal-left">
+        <p>
+          Menicon（目立康）始创于1951年，总部位于日本名古屋，是全球历史最悠久的隐形眼镜制造商之一。
+          七十余年来，我们始终以"用科技改善视觉体验"为使命，不断推动隐形眼镜行业的创新与发展。
+        </p>
+        <p>
+          Menicon Life Support Hub 是目立康中国团队打造的内部管理平台，
+          旨在提升营销物料管理效率、优化预算控制流程，并为团队提供强大的产品知识支持。
+        </p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-card__num">70+</div>
+            <div class="stat-card__label">年行业经验</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__num">80+</div>
+            <div class="stat-card__label">国家与地区</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__num">1000+</div>
+            <div class="stat-card__label">产品种类</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__num">24/7</div>
+            <div class="stat-card__label">全天候服务</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal-right">
+        <div class="about-graphic">
+          <div class="about-graphic__inner">
+            <span style="font-size: 4rem;">👁️</span>
+            <span>用科技守护视界</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__brand-name">MENICON LIFE</div>
+        <p class="footer__brand-desc">
+          目立康生活支持平台，为团队提供一站式营销物料管理、预算控制与产品支持服务。
+        </p>
+      </div>
+      <div class="footer__col">
+        <h4>功能模块</h4>
+        <a href="#catalog">免费品目录</a>
+        <a href="javascript:void(0)" onclick="openLogin()">库存管理</a>
+        <a href="javascript:void(0)" onclick="openLogin()">预算管理</a>
+        <a href="#">产品专家</a>
+      </div>
+      <div class="footer__col">
+        <h4>支持</h4>
+        <a href="#">帮助中心</a>
+        <a href="#">使用指南</a>
+        <a href="#">常见问题</a>
+        <a href="#">联系我们</a>
+      </div>
+      <div class="footer__col">
+        <h4>公司</h4>
+        <a href="#about">关于目立康</a>
+        <a href="#">隐私政策</a>
+        <a href="#">服务条款</a>
+        <a href="#">加入我们</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Menicon Life Support Hub. All rights reserved.</span>
+      <div class="footer__socials">
+        <a href="#" title="微信">💬</a>
+        <a href="#" title="微博">🌐</a>
+        <a href="#" title="邮件">✉️</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ PRODUCT DETAIL MODAL ============ -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal" style="position:relative;">
+      <button class="modal__close" onclick="closeProductModal()">✕</button>
+      <div class="modal__img" id="modalImg">📦</div>
+      <div class="modal__info">
+        <div>
+          <h2 class="modal__title" id="modalTitle">产品名称</h2>
+          <p class="modal__sku" id="modalSku">SKU: —</p>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <span class="product-card__tag" id="modalTag">分类</span>
+          <span class="product-card__stock" id="modalStock">
+            <span class="stock-dot stock-dot--available"></span>
+            充足
+          </span>
+        </div>
+        <div class="modal__detail-card">
+          <h4>📋 产品介绍</h4>
+          <p id="modalDesc">暂无描述。</p>
+        </div>
+        <div class="modal__detail-card">
+          <h4>📝 目录描述</h4>
+          <p id="modalCatalogDesc">此产品已录入免费品目录。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LOGIN MODAL ============ -->
+  <div class="login-overlay" id="loginModal">
+    <div class="login-card">
+      <button class="modal__close" onclick="closeLogin()">✕</button>
+      <div class="login-card__header">
+        <h2>欢迎回来</h2>
+        <p>登录以访问完整功能</p>
+      </div>
+
+      <form class="login-card__form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username">用户名</label>
+          <input type="text" id="username" placeholder="请输入用户名" required />
+        </div>
+        <div class="form-group">
+          <label for="password">密码</label>
+          <input type="password" id="password" placeholder="请输入密码" required />
+        </div>
+        <button type="submit" class="btn btn--primary login-card__submit" style="width:100%;">
+          登 录
+        </button>
+      </form>
+
+      <div class="login-card__permissions">
+        <h4>登录后可访问以下模块：</h4>
+        <div class="permission-list">
+          <div class="permission-item"><span class="perm-icon">📦</span> 免费品目录 — 公开访问</div>
+          <div class="permission-item"><span class="perm-icon">📊</span> 库存管理 — 需要登录</div>
+          <div class="permission-item"><span class="perm-icon">💰</span> 预算管理 — 需要登录</div>
+          <div class="permission-item"><span class="perm-icon">🧠</span> 产品专家 — 开发中</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
