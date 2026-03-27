@@ -16,7 +16,7 @@ const PRODUCTS = [
     units: '50 套',
     desc: '精选茶叶组合礼盒，适合客户馈赠与活动推广使用。包含多种优质茶品，包装精美大方。',
     catalogDesc: '适用于客户拜访、展会推广及节日馈赠等场景。每套包含4种不同风味的精选茶叶。',
-    emoji: '🍵'
+    images: ['image/茶生和沏组合茶叶礼盒1.webp', 'image/茶生和沏组合茶叶礼盒2.webp', 'image/茶生和沏组合茶叶礼盒3.webp']
   },
   {
     id: 'MR2100',
@@ -30,7 +30,7 @@ const PRODUCTS = [
     units: '200 个',
     desc: '高品质双面折叠镜，一面普通镜面，一面放大镜面，方便隐形眼镜佩戴与护理。',
     catalogDesc: '专为隐形眼镜用户设计的便携护理镜，折叠设计便于携带，是门店赠品的理想选择。',
-    emoji: '🪞'
+    images: ['image/多功能双面护理镜1.webp', 'image/多功能双面护理镜2.webp', 'image/多功能双面护理镜3.webp']
   },
   {
     id: 'PL1500',
@@ -44,7 +44,7 @@ const PRODUCTS = [
     units: '30 支',
     desc: '专业钴蓝光检测笔灯，用于角膜荧光素染色检查，是验配师的得力工具。',
     catalogDesc: '医学级钴蓝光源，配合荧光素钠使用，可有效检查角膜健康状况。',
-    emoji: '🔦'
+    images: ['image/钴蓝光笔灯1.webp', 'image/钴蓝光笔灯2.webp']
   },
   {
     id: 'BG3200',
@@ -58,63 +58,63 @@ const PRODUCTS = [
     units: '150 个',
     desc: '时尚便携收纳包，内含隐形眼镜盒、镊子与吸棒，外出携带必备。',
     catalogDesc: '完整的隐形眼镜护理套装收纳包，印有Menicon品牌标识，适合作为推广赠品分发。',
-    emoji: '👜'
+    images: ['image/镜片护理收纳包1.webp', 'image/镜片护理收纳包2.webp', 'image/镜片护理收纳包3.webp']
   },
   {
-    id: 'PS0800',
-    name: '品牌宣传海报套装',
+    id: 'FM0800',
+    name: '折叠收纳镜',
     category: 'market',
     categoryLabel: '营销物料',
     tagClass: 'tag--market',
-    sku: 'PS0800',
+    sku: 'FM0800',
     stock: 'available',
     stockLabel: '充足',
-    units: '500 套',
-    desc: '高品质品牌宣传海报，涵盖产品线介绍、品牌形象与促销活动等多种主题。',
-    catalogDesc: '适用于门店装饰与活动现场布置，多种尺寸可选，画面清晰色彩还原度高。',
-    emoji: '🖼️'
+    units: '200 个',
+    desc: '精致折叠收纳镜，镜面清晰度高，可折叠收纳设计便于携带，外观时尚大方。',
+    catalogDesc: '适用于门店赠品与客户拜访场景，印有Menicon品牌标识，实用性强。',
+    images: ['image/折叠收纳镜1.webp', 'image/折叠收纳镜2.webp', 'image/折叠收纳镜3.webp']
   },
   {
-    id: 'CL5500',
-    name: '护理液试用装',
+    id: 'ZN5500',
+    name: 'Z Night郁金香U盘',
     category: 'promo',
     categoryLabel: '推广赠品',
     tagClass: 'tag--promo',
-    sku: 'CL5500',
-    stock: 'out',
-    stockLabel: '已售罄',
-    units: '0 瓶',
-    desc: 'Menicon 专业护理液60ml旅行装，温和清洁配方，适合所有类型的隐形眼镜。',
-    catalogDesc: '小规格试用装，适合作为新客户体验装或随盒赠品使用。暂时缺货，补货中。',
-    emoji: '💧'
+    sku: 'ZN5500',
+    stock: 'available',
+    stockLabel: '充足',
+    units: '100 个',
+    desc: 'Z Night系列定制郁金香造型U盘，外观精美独特，兼具实用性与品牌展示功能。',
+    catalogDesc: '创意造型U盘，适合作为品牌推广赠品，容量满足日常使用需求。',
+    images: ['image/Z Night郁金香U盘.png']
   },
   {
-    id: 'NB4400',
-    name: '品牌定制笔记本',
+    id: 'PC4400',
+    name: '目立康产品价目册',
     category: 'other',
     categoryLabel: '其他',
     tagClass: 'tag--other',
-    sku: 'NB4400',
+    sku: 'PC4400',
     stock: 'available',
     stockLabel: '充足',
     units: '300 本',
-    desc: 'A5尺寸精装笔记本，封面烫金Menicon标识，内页采用护眼米黄纸张。',
-    catalogDesc: '高品质商务笔记本，适合会议、培训及客户活动场景使用。',
-    emoji: '📓'
+    desc: '目立康全线产品价目手册，涵盖所有产品系列的详细参数与价格信息。',
+    catalogDesc: '适用于门店展示与客户咨询，内容定期更新，确保价格信息准确。',
+    images: ['image/目立康产品价目册.png']
   },
   {
-    id: 'UB6600',
-    name: '折叠遮阳伞',
+    id: 'PM6600',
+    name: '折叠随身镜',
     category: 'other',
     categoryLabel: '其他',
     tagClass: 'tag--other',
-    sku: 'UB6600',
-    stock: 'low',
-    stockLabel: '库存紧张',
-    units: '45 把',
-    desc: '轻量三折自动开合伞，UPF50+ 防晒等级，印有品牌标识。',
-    catalogDesc: '实用型户外赠品，兼具防晒与防雨功能，适合夏季促销活动赠送使用。',
-    emoji: '☂️'
+    sku: 'PM6600',
+    stock: 'available',
+    stockLabel: '充足',
+    units: '180 个',
+    desc: '轻巧便携折叠随身镜，镜面高清，外壳时尚，随时满足补妆与隐形眼镜佩戴需求。',
+    catalogDesc: '精致小巧的随身镜，折叠设计节省空间，适合作为门店或活动赠品。',
+    images: ['image/折叠随身镜1.webp', 'image/折叠随身镜2.webp', 'image/折叠随身镜3.webp']
   }
 ];
 
@@ -385,7 +385,7 @@ function renderProducts() {
   grid.innerHTML = filtered.map((p, i) => `
     <div class="product-card reveal" style="transition-delay:${i * 0.08}s;" onclick="openProductModal('${p.id}')">
       <div class="product-card__img">
-        <span style="font-size:3.5rem;">${p.emoji}</span>
+        <img src="${p.images[0]}" alt="${p.name}" loading="lazy" />
       </div>
       <div class="product-card__body">
         <span class="product-card__tag ${p.tagClass}">${p.categoryLabel}</span>
@@ -421,6 +421,9 @@ function searchProducts(query) {
 renderProducts();
 
 // ==================== PRODUCT DETAIL MODAL ====================
+let modalImageIndex = 0;
+let modalImages = [];
+
 function openProductModal(id) {
   const product = PRODUCTS.find(p => p.id === id);
   if (!product) return;
@@ -437,11 +440,39 @@ function openProductModal(id) {
   const stock = document.getElementById('modalStock');
   stock.innerHTML = `<span class="stock-dot stock-dot--${product.stock}"></span> ${product.stockLabel}`;
 
-  const img = document.getElementById('modalImg');
-  img.innerHTML = `<span style="font-size:5rem;">${product.emoji}</span>`;
+  // Image carousel
+  modalImages = product.images;
+  modalImageIndex = 0;
+  renderModalImage();
 
   document.getElementById('productModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function renderModalImage() {
+  const img = document.getElementById('modalImg');
+  const hasMultiple = modalImages.length > 1;
+  img.innerHTML = `
+    ${hasMultiple ? '<button class="modal-img-nav modal-img-nav--prev" onclick="event.stopPropagation(); prevModalImage()">‹</button>' : ''}
+    <img src="${modalImages[modalImageIndex]}" alt="产品图片" />
+    ${hasMultiple ? '<button class="modal-img-nav modal-img-nav--next" onclick="event.stopPropagation(); nextModalImage()">›</button>' : ''}
+    ${hasMultiple ? `<div class="modal-img-dots">${modalImages.map((_, i) => `<span class="modal-img-dot${i === modalImageIndex ? ' active' : ''}" onclick="event.stopPropagation(); goToModalImage(${i})"></span>`).join('')}</div>` : ''}
+  `;
+}
+
+function prevModalImage() {
+  modalImageIndex = (modalImageIndex - 1 + modalImages.length) % modalImages.length;
+  renderModalImage();
+}
+
+function nextModalImage() {
+  modalImageIndex = (modalImageIndex + 1) % modalImages.length;
+  renderModalImage();
+}
+
+function goToModalImage(idx) {
+  modalImageIndex = idx;
+  renderModalImage();
 }
 
 function closeProductModal() {
