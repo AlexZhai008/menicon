@@ -429,7 +429,7 @@ input {
 /* ---------- Module Cards ---------- */
 .modules-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: var(--space-lg);
   max-width: 1200px;
   margin: 0 auto;
@@ -498,21 +498,21 @@ input {
 
 /* User custom images - large, 3D, transparent (cutout) look */
 .custom-module-img {
-  width: 140px;
-  height: 140px;
+  width: 220px;
+  height: 220px;
   border-radius: 0;
   box-shadow: none;
   object-fit: contain;
   margin-bottom: var(--space-xl);
-  filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.5));
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.5s ease;
-  /* Uncomment the line below if the images have a solid white background to simulate a cutout */
-  /* mix-blend-mode: multiply; */
+  /* Use screen blend mode to perfectly hide the pure black background of the 3D images */
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 15px 30px rgba(212, 168, 83, 0.15));
+  transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), filter 0.6s ease;
 }
 
 .module-card:hover .custom-module-img {
-  transform: translateY(-18px) scale(1.15) rotate(3deg);
-  filter: drop-shadow(0 25px 25px rgba(212, 168, 83, 0.4)) brightness(1.1);
+  transform: translateY(-20px) scale(1.1);
+  filter: drop-shadow(0 25px 40px rgba(212, 168, 83, 0.4)) brightness(1.2);
 }
 
 .module-card:hover .module-card__icon-img:not(.custom-module-img) {
