@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Menicon Life Support Hub — 预算管理系统" />
+  <title>预算管理 — Menicon Life</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>✦</text></svg>" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <a href="index.html" class="navbar__brand">
+      <div class="navbar__brand-icon">M</div>
+      <span>Menicon Life</span>
+    </a>
+    <div class="navbar__links" id="navLinks">
+      <a href="index.html" class="navbar__link">首页</a>
+      <a href="inventory.html" class="navbar__link">库存管理</a>
+      <a href="budget.html" class="navbar__link active">预算管理</a>
+    </div>
+    <div class="navbar__actions">
+      <span class="user-badge" id="userBadge">👤 管理员</span>
+      <button class="btn btn--ghost btn--sm" onclick="handleLogout()">登出</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <div class="admin-container">
+
+      <!-- Page Header -->
+      <div class="admin-header">
+        <div>
+          <h1 class="admin-title">💰 预算管理</h1>
+          <p class="admin-subtitle">年度预算总览与支出记录追踪，按类别统计分析。</p>
+        </div>
+        <button class="btn btn--primary" onclick="openExpenseModal()">
+          + 新增支出
+        </button>
+      </div>
+
+      <!-- Budget Overview Cards -->
+      <div class="stats-grid" id="budgetStats">
+        <div class="stats-card">
+          <div class="stats-card__label">年度总预算</div>
+          <div class="stats-card__value" id="statBudget">-</div>
+        </div>
+        <div class="stats-card stats-card--danger">
+          <div class="stats-card__label">已支出</div>
+          <div class="stats-card__value" id="statSpent">-</div>
+        </div>
+        <div class="stats-card stats-card--success">
+          <div class="stats-card__label">剩余预算</div>
+          <div class="stats-card__value" id="statRemaining">-</div>
+        </div>
+        <div class="stats-card stats-card--warning">
+          <div class="stats-card__label">使用率</div>
+          <div class="stats-card__value" id="statUsage">-</div>
+        </div>
+      </div>
+
+      <!-- Budget Progress Bar -->
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <h2>预算使用进度</h2>
+        </div>
+        <div class="budget-progress">
+          <div class="budget-progress__bar">
+            <div class="budget-progress__fill" id="budgetProgressFill" style="width: 0%"></div>
+          </div>
+          <div class="budget-progress__labels">
+            <span>已使用 <strong id="progressPercent">0%</strong></span>
+            <span id="progressRemaining">剩余 ¥0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <h2>按类别统计</h2>
+        </div>
+        <div class="category-grid" id="categoryGrid">
+          <div style="text-align:center; padding:2rem; color:var(--color-text-muted);">加载中...</div>
+        </div>
+      </div>
+
+      <!-- Expense Records Table -->
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <h2>支出记录</h2>
+          <div class="admin-card__filters">
+            <select id="categoryFilter" class="form-select" onchange="filterRecords()">
+              <option value="all">全部类别</option>
+              <option value="营销推广">营销推广</option>
+              <option value="物料采购">物料采购</option>
+              <option value="活动费用">活动费用</option>
+              <option value="办公开支">办公开支</option>
+              <option value="其他">其他</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="expenseTable">
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>项目名称</th>
+                <th>类别</th>
+                <th>金额</th>
+                <th>备注</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="expenseBody">
+              <tr><td colspan="6" style="text-align:center; padding:2rem;">加载中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Add/Edit Expense Modal -->
+  <div class="modal-overlay" id="expenseModal">
+    <div class="modal" style="grid-template-columns: 1fr; max-width:520px;">
+      <button class="modal__close" onclick="closeExpenseModal()">✕</button>
+      <div class="modal__info" style="padding: var(--space-xl);">
+        <h2 id="expenseModalTitle">新增支出</h2>
+        <input type="hidden" id="expenseId" />
+        <div class="form-group">
+          <label for="expenseTitle">项目名称</label>
+          <input type="text" id="expenseTitle" placeholder="请输入项目名称" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label for="expenseAmount">金额 (元)</label>
+          <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" min="0" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label for="expenseCategory">类别</label>
+          <select id="expenseCategory" class="form-select">
+            <option value="营销推广">营销推广</option>
+            <option value="物料采购">物料采购</option>
+            <option value="活动费用">活动费用</option>
+            <option value="办公开支">办公开支</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="expenseDate">日期</label>
+          <input type="date" id="expenseDate" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label for="expenseNote">备注</label>
+          <input type="text" id="expenseNote" placeholder="请输入备注（可选）" class="form-input" />
+        </div>
+        <button class="btn btn--primary" style="width:100%; margin-top: var(--space-md);" onclick="submitExpense()">
+          确认提交
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="budget.js"></script>
+</body>
+</html>

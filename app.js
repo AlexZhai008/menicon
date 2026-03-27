@@ -322,10 +322,50 @@ function scrollToSection(id) {
   }
 }
 
+// ==================== AUTH STATE ====================
+(async function checkAuthState() {
+  const { data: { user } } = await supabase.auth.getUser();
+  updateAuthUI(user);
+})();
+
+function updateAuthUI(user) {
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const userBadge = document.getElementById('userBadge');
+
+  if (user) {
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'inline-flex';
+    userBadge.style.display = 'inline-flex';
+  } else {
+    loginBtn.style.display = 'inline-flex';
+    logoutBtn.style.display = 'none';
+    userBadge.style.display = 'none';
+  }
+}
+
+// Navigate to module page (check login first)
+async function goToModule(page) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    window.location.href = page;
+  } else {
+    openLogin();
+  }
+}
+
+async function handleLogoutMain() {
+  await supabase.auth.signOut();
+  updateAuthUI(null);
+  showToast('已登出');
+}
+
 // ==================== LOGIN MODAL ====================
 function openLogin() {
   document.getElementById('loginModal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  const errorEl = document.getElementById('loginError');
+  if (errorEl) errorEl.style.display = 'none';
 }
 
 function closeLogin() {
@@ -333,24 +373,39 @@ function closeLogin() {
   document.body.style.overflow = '';
 }
 
-function handleLogin(e) {
+async function handleLogin(e) {
   e.preventDefault();
-  const user = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginSubmitBtn');
+  const errorEl = document.getElementById('loginError');
 
-  if (user && pass) {
-    // Simulate login
-    const btn = e.target.querySelector('button[type="submit"]');
-    btn.textContent = '登录中...';
-    btn.disabled = true;
+  btn.textContent = '登录中...';
+  btn.disabled = true;
+  errorEl.style.display = 'none';
 
-    setTimeout(() => {
-      alert(`欢迎, ${user}! 登录功能为演示模式。`);
-      btn.textContent = '登 录';
-      btn.disabled = false;
-      closeLogin();
-    }, 1200);
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: pass
+  });
+
+  if (error) {
+    errorEl.textContent = '邮箱或密码错误，请重试。';
+    errorEl.style.display = 'block';
+    btn.textContent = '登 录';
+    btn.disabled = false;
+    return;
   }
+
+  btn.textContent = '登录成功！';
+  updateAuthUI(data.user);
+  showToast('欢迎回来，管理员！');
+
+  setTimeout(() => {
+    btn.textContent = '登 录';
+    btn.disabled = false;
+    closeLogin();
+  }, 800);
 }
 
 // Close login on overlay click

@@ -28,9 +28,11 @@
     </div>
 
     <div class="navbar__actions">
+      <span class="user-badge" id="userBadge" style="display:none;">👤 管理员</span>
       <button class="btn btn--primary btn--sm" id="loginBtn" onclick="openLogin()">
         <span>🔐</span> 登录
       </button>
+      <button class="btn btn--ghost btn--sm" id="logoutBtn" style="display:none;" onclick="handleLogoutMain()">登出</button>
       <button class="navbar__toggle" id="navToggle" onclick="toggleNav()">
         <span></span>
         <span></span>
@@ -84,7 +86,7 @@
       </div>
 
       <!-- Card 2: Inventory -->
-      <div class="module-card reveal" style="transition-delay: 0.2s;" onclick="openLogin()">
+      <div class="module-card reveal" style="transition-delay: 0.2s;" onclick="goToModule('inventory.html')">
         <div class="module-card__icon">📊</div>
         <h3 class="module-card__title">库存管理</h3>
         <p class="module-card__desc">全方位追踪库存快照、图片库与详细库存数据，确保供应链高效运转。</p>
@@ -93,7 +95,7 @@
       </div>
 
       <!-- Card 3: Budget -->
-      <div class="module-card reveal" style="transition-delay: 0.3s;" onclick="openLogin()">
+      <div class="module-card reveal" style="transition-delay: 0.3s;" onclick="goToModule('budget.html')">
         <div class="module-card__icon">💰</div>
         <h3 class="module-card__title">预算管理</h3>
         <p class="module-card__desc">预算对实际支出分析、差异追踪与财务报告，让每一笔开支清晰可控。</p>
@@ -271,14 +273,15 @@
 
       <form class="login-card__form" onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label for="username">用户名</label>
-          <input type="text" id="username" placeholder="请输入用户名" required />
+          <label for="loginEmail">邮箱</label>
+          <input type="email" id="loginEmail" placeholder="请输入邮箱" value="admin@menicon.com" required />
         </div>
         <div class="form-group">
-          <label for="password">密码</label>
-          <input type="password" id="password" placeholder="请输入密码" required />
+          <label for="loginPassword">密码</label>
+          <input type="password" id="loginPassword" placeholder="请输入密码" required />
         </div>
-        <button type="submit" class="btn btn--primary login-card__submit" style="width:100%;">
+        <div id="loginError" style="color: var(--color-danger); font-size: 0.85rem; display:none;"></div>
+        <button type="submit" class="btn btn--primary login-card__submit" style="width:100%;" id="loginSubmitBtn">
           登 录
         </button>
       </form>
@@ -295,6 +298,8 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
