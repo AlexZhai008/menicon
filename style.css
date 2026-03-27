@@ -482,6 +482,21 @@ input {
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
+.module-card__icon-img {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  margin-bottom: var(--space-lg);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 4px 16px rgba(212, 168, 83, 0.15);
+}
+
+.module-card:hover .module-card__icon-img {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(212, 168, 83, 0.3);
+}
+
 .module-card:hover .module-card__icon {
   background: linear-gradient(135deg, var(--color-accent), #e8c97a);
   transform: scale(1.05);
