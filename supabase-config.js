@@ -5,11 +5,14 @@
 const SUPABASE_URL = 'https://aahnkfiuhiqecscjhqyz.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhaG5rZml1aGlxZWNzY2pocXl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1ODQ3NjEsImV4cCI6MjA5MDE2MDc2MX0.ODHxzAuH3nLWRaPwrIiss0704jlhLX2V6xaHKwAph2o';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Create client and store globally (avoid naming conflict with CDN's window.supabase)
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Override window.supabase so all other scripts can use `supabase.xxx`
+window.supabase = supabaseClient;
 
 // ==================== AUTH HELPERS ====================
 async function getUser() {
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data: { user } } = await supabaseClient.auth.getUser();
   return user;
 }
 
@@ -28,7 +31,7 @@ async function requireAuth() {
 }
 
 async function handleLogout() {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   window.location.href = 'index.html';
 }
 
